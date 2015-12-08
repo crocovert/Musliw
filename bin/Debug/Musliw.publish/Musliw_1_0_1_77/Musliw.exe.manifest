@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly manifestVersion="1.0" xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asmv1:assemblyIdentity name="Musliw.exe" version="1.0.1.77" publicKeyToken="7c9ef1c0161cb377" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Musliw" version="1.0.1.71" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Musliw.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet class="System.Security.PermissionSet" version="1" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="4" minorVersion="10" buildNumber="0" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="2.0.50727.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Musliw.exe" size="208896">
+      <assemblyIdentity name="Musliw" version="1.0.1.71" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>iAGCjgW0XsIOiYIG9OB+YclLlVY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+<publisherIdentity name="CN=CETE59\PalmierP" issuerKeyHash="7a38df054663e49d4434de5099179611cbdc09ec" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>gKN7vy0uos4wbl+i3GgkLLeSraw=</DigestValue></Reference></SignedInfo><SignatureValue>YD5+r4rqkifI6oSBxk/Cnf/5nSAs2x8CLezmTN7et+he3FjC6JIFPCsole0GmRSkPwgA6Za7IX/3FywDTxMSwSHthAiXKKCbS4I7PRFHjTNUYAPyGP88H0yqpicws4gWRQd0/35USURxz3JyODCxUgLrZzDqNdxd5IreYBKZxwA=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>uHnpOHAHTNEX2ioxwOhmexfXl8kH3bSARiNo0zJnLjnPtpd9vJd7WuhtoxoQCV4VurJyGKRr4Sh8p1dZXVffLyapbjLVxWsGJgyC6f584BjkDSyO4MgycBvnrXgHSK0tTAdzks2NPjBY8RjxN9lK38H6SLaQw3oLipnaaxkT6TU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="acad92b72c2468dca25f6e30cea22e2dbf7ba380" Description="" Url=""><as:assemblyIdentity name="Musliw.exe" version="1.0.1.77" publicKeyToken="7c9ef1c0161cb377" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=CETE59\PalmierP</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>gouQ/Y43rUtVl+aM/IpVAkfxvg8=</DigestValue></Reference></SignedInfo><SignatureValue>tiRbIzYapbjhSKm0BSQ56KcdO5hrBKjDdRMmQTbvttinH9m7X67A7KCzTCHTP2RUvMdn4gexwXWDynmqcCg1uuEZiRarZULJx0SeCQRV3J4AFb81PBHw1bLXV61icd/sq9X83srSLThQ1vp7VxAioyuIXRl9Jg4PrY04VgsWE5Q=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>uHnpOHAHTNEX2ioxwOhmexfXl8kH3bSARiNo0zJnLjnPtpd9vJd7WuhtoxoQCV4VurJyGKRr4Sh8p1dZXVffLyapbjLVxWsGJgyC6f584BjkDSyO4MgycBvnrXgHSK0tTAdzks2NPjBY8RjxN9lK38H6SLaQw3oLipnaaxkT6TU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBzTCCATqgAwIBAgIQT8lLEVymVYpGOCaj1UhNZjAJBgUrDgMCHQUAMCkxJzAlBgNVBAMeHgBDAEUAVABFADUAOQBcAFAAYQBsAG0AaQBlAHIAUDAeFw0wNzExMzAxMjQ2NDlaFw0wODExMjkxODQ2NDlaMCkxJzAlBgNVBAMeHgBDAEUAVABFADUAOQBcAFAAYQBsAG0AaQBlAHIAUDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAuHnpOHAHTNEX2ioxwOhmexfXl8kH3bSARiNo0zJnLjnPtpd9vJd7WuhtoxoQCV4VurJyGKRr4Sh8p1dZXVffLyapbjLVxWsGJgyC6f584BjkDSyO4MgycBvnrXgHSK0tTAdzks2NPjBY8RjxN9lK38H6SLaQw3oLipnaaxkT6TUCAwEAATAJBgUrDgMCHQUAA4GBAADNXWW9kph5NzYahHLeGYTxMjMVdt3yZBWiZdldEK0jKu/FNyPD0vC/Xd9e/+U7QNXJgu0U+JEchEZSmN48sWLIj9stZKrOW+wRmFv84k9xDnJalB1FGnqLapv/7mZr2hNN1r35NCX9frowBBBPDHeGD8XsiZlOpHTUNfray6Ay</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
