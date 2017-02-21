@@ -1,0 +1,1 @@
+id;o;i;j;numtrc;ligne;jour;heureo;heured;temps;tveh;tmap;tatt;tcorr;ncorr;tatt1;cout;longueur;pole;volau;texte;cveh;cwait;cmap;cboa;ctmap;tboa;njours;precedent;type

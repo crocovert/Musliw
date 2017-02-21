@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="Musliw.exe" version="1.7.4.240" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="Musliw.exe" version="1.8.0.246" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Musliw" version="1.7.4.240" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="Musliw" version="1.8.0.246" language="neutral" processorArchitecture="msil" />
     <commandLine file="Musliw.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -54,62 +54,62 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Musliw.exe" size="315392">
-      <assemblyIdentity name="Musliw" version="1.7.4.240" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Musliw.exe" size="317952">
+      <assemblyIdentity name="Musliw" version="1.8.0.246" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>65OZZPrnkqeFsHmguLIycwthIZc=</dsig:DigestValue>
+        <dsig:DigestValue>UjEMo9Vznf975JQ+hcj9Yiua0Zs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en\Musliw.resources.dll" size="13824">
-      <assemblyIdentity name="Musliw.resources" version="1.7.4.240" language="en" processorArchitecture="msil" />
+      <assemblyIdentity name="Musliw.resources" version="1.8.0.246" language="en" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>rA1iqVyvdCZfJ1aQSJ/CMSH2PhA=</dsig:DigestValue>
+        <dsig:DigestValue>dhvp0+cYkATL9W4CIifu6V1CEk0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en-US\Musliw.resources.dll" size="8192">
-      <assemblyIdentity name="Musliw.resources" version="1.7.4.240" language="en-US" processorArchitecture="msil" />
+      <assemblyIdentity name="Musliw.resources" version="1.8.0.246" language="en-US" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>J8OxFXpkt6VGodnbNnmDY+sgprg=</dsig:DigestValue>
+        <dsig:DigestValue>QAfj9bNkCvK3IYjs6RUWqgdxyus=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="fr\Musliw.resources.dll" size="7680">
-      <assemblyIdentity name="Musliw.resources" version="1.7.4.240" language="fr" processorArchitecture="msil" />
+      <assemblyIdentity name="Musliw.resources" version="1.8.0.246" language="fr" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>JX6wNvl79vu+QF2zlHr5WeuEIvg=</dsig:DigestValue>
+        <dsig:DigestValue>8A5Zjk726arHJnVNG88NrlT0m2c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="fr-FR\Musliw.resources.dll" size="4608">
-      <assemblyIdentity name="Musliw.resources" version="1.7.4.240" language="fr-FR" processorArchitecture="msil" />
+      <assemblyIdentity name="Musliw.resources" version="1.8.0.246" language="fr-FR" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>wuF/oZbvLmKHcFAFxrsXateUAQ0=</dsig:DigestValue>
+        <dsig:DigestValue>sPmK+7pBqrqivkzi0nXuVc9fWGQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -197,13 +197,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Musliw.exe.config" size="145">
+  <file name="Musliw.exe.config" size="160">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>uBjnHD0MaM0l0kIAQG80MoTWRuk=</dsig:DigestValue>
+      <dsig:DigestValue>me59K4EGUbE/XDAKE1g7NlpLtXw=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

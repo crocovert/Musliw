@@ -1,0 +1,9 @@
+alain.lhostis@inrets.fr;
+fabien.leurent@inrets.fr;
+chantal.laine@developpement-durable.gouv.fr;
+pascaline.cousin@developpement-durable.gouv.fr;
+fabrice.hasiak@developpement-durable.gouv.fr;
+laurent.chevereau@developpement-durable.gouv.fr;
+pascale.gondeaux@developpement-durable.gouv.fr;
+patrick.palmier@developpement-durable.gouv.fr;
+damien.verry@developpement-durable.gouv.fr;

@@ -1,0 +1,12 @@
+include "mapbasic.def"
+dim n,v,i as integer
+n=tableinfo("réseau_30000_arcs", TAB_INFO_NROWS)
+v=0
+for i=1 to n
+fetch rec i from  réseau_30000_arcs
+if réseau_30000_arcs.vitesse_moyenne_VL=0 then
+update réseau_30000_arcs set vitesse_moyenne_VL=v where rowid=i
+else
+v=réseau_30000_arcs.vitesse_moyenne_VL
+end if 
+next

@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <StartupObject>Musliw.Program</StartupObject>
     <SignAssembly>false</SignAssembly>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <PublishUrl>F:\Musliw_bin\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -37,8 +37,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Musliw</ProductName>
     <PublisherName>CEREMA Direction territoriale Nord-Picardie</PublisherName>
-    <ApplicationRevision>241</ApplicationRevision>
-    <ApplicationVersion>1.7.4.%2a</ApplicationVersion>
+    <ApplicationRevision>247</ApplicationRevision>
+    <ApplicationVersion>1.8.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

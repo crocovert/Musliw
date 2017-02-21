@@ -679,51 +679,55 @@ namespace Musliw
                     if (carte == "t nodes")
                     {
                         string ni= ch[0].Trim();
-                        projet.reseaux[projet.reseau_actif].numnoeud.Add(ni,projet.reseaux[projet.reseau_actif].nodes.Count);
-                        float xi, yi;
-                        if (System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ".")
+                        if (projet.reseaux[projet.reseau_actif].numnoeud.ContainsKey(ni) == false)
                         {
-                            xi = float.Parse(ch[1].Replace(',', '.'));
-                            yi = float.Parse(ch[2].Replace(',', '.'));
-                        }
-                        else
-                        {
-                            xi = float.Parse(ch[1].Replace('.', ','));
-                            yi = float.Parse(ch[2].Replace('.', ','));
-                        }
-                        node noeud = new node();
-                        node nul = new node();
-                        noeud.i = ni;
-                        noeud.x = xi;
-                        noeud.y = yi;
-                        noeud.is_visible = true;
-                        if (xi > projet.reseaux[num_res].xu)
-                        {
-                            projet.reseaux[num_res].xu = xi;
-                        }
-                        if (xi < projet.reseaux[num_res].xl)
-                        {
-                            projet.reseaux[num_res].xl = xi;
-                        }
-                        if (yi > projet.reseaux[num_res].yu)
-                        {
+                            projet.reseaux[projet.reseau_actif].numnoeud.Add(ni, projet.reseaux[projet.reseau_actif].nodes.Count);
 
-                            projet.reseaux[num_res].yu = yi;
+                            float xi, yi;
+                            if (System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ".")
+                            {
+                                xi = float.Parse(ch[1].Replace(',', '.'));
+                                yi = float.Parse(ch[2].Replace(',', '.'));
+                            }
+                            else
+                            {
+                                xi = float.Parse(ch[1].Replace('.', ','));
+                                yi = float.Parse(ch[2].Replace('.', ','));
+                            }
+                            node noeud = new node();
+                            node nul = new node();
+                            noeud.i = ni;
+                            noeud.x = xi;
+                            noeud.y = yi;
+                            noeud.is_visible = true;
+                            if (xi > projet.reseaux[num_res].xu)
+                            {
+                                projet.reseaux[num_res].xu = xi;
+                            }
+                            if (xi < projet.reseaux[num_res].xl)
+                            {
+                                projet.reseaux[num_res].xl = xi;
+                            }
+                            if (yi > projet.reseaux[num_res].yu)
+                            {
 
+                                projet.reseaux[num_res].yu = yi;
+
+                            }
+                            if (yi < projet.reseaux[num_res].yl)
+                            {
+                                projet.reseaux[num_res].yl = yi;
+                            }
+
+
+                            if (ch.Length > 3)
+                            {
+                                noeud.texte = ch[3];
+                            }
+
+
+                            projet.reseaux[projet.reseau_actif].nodes.Add(noeud);
                         }
-                        if (yi < projet.reseaux[num_res].yl)
-                        {
-                            projet.reseaux[num_res].yl = yi;
-                        }
-
-
-                      if (ch.Length>3)
-                        {
-                            noeud.texte=ch[3];
-                        }
-                        
-
-                        projet.reseaux[projet.reseau_actif].nodes.Add(noeud);
 
                     }
                     else if (carte == "t links")
@@ -1226,13 +1230,14 @@ namespace Musliw
                     System.IO.StreamWriter fich_result = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_aff.txt");
                     System.IO.StreamWriter fich_od = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_od.txt");
                     System.IO.StreamWriter fich_noeuds = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_noeuds.txt");
+                    System.IO.StreamWriter fich_detour = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_detour.txt");
                     Ecrit_parametres(projet.param_affectation_horaire.nom_sortie + "_param.txt");
                     fich_sortie.WriteLine("id;o;ij;ligne;numtrc;jour;heureo;heured;temps;tveh;tmap;tatt;tcorr;ncorr;tatt1;cout;longueur;pole;volau;precedent;type;toll");
                     fich_sortie2.WriteLine("id;o;d;jour;heure;i;j;ligne;service;temps;heureo;tveh;tmap;tatt;tcorr;ncorr;tatt1;cout;longueur;pole;volau;boai;alij;texte;type;toll");
                     fich_result.WriteLine("i;j;ligne;volau;boai;alij;texte;type;toll");
                     fich_od.WriteLine("id;o;d;jour;heureo;heured;temps;tveh;tmap;tatt;tcorr;ncorr;tatt1;cout;longueur;pole;volau;texte;nbpop;toll");
                     fich_noeuds.WriteLine("id;o;d;jour;numero;heureo;heured;temps;tveh;tmap;tatt;tcorr;ncorr;tatt1;cout;longueur;pole;toll");
-
+                    
 
 
                     // Console.WriteLine("création de la topologie des tronçons terminée");
@@ -2101,11 +2106,21 @@ namespace Musliw
 
                                             }
 
-                                            if (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire < max_correspondance)
+
+                                            Service s = projet.reseaux[projet.reseau_actif].links[successeur].services[ii];
+                                            int nb_jours=projet.param_affectation_horaire.nb_jours;
+                                            float hs = horaire_service(s, projet.param_affectation_horaire.nb_jours, horaire, projet.reseaux[projet.reseau_actif].nom_calendrier, jour);
+                                            if ( hs- horaire < max_correspondance)
+                                            {
+                                                cout2 = (hs+projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd  - horaire) * projet.param_affectation_horaire.cwait[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type];
+                                                num_service = ii;
+
+                                            }
+
                                             {
                                                 if (((projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire) * projet.param_affectation_horaire.cwait[succ_type])+ projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type] < cout2 && delta > -1)
                                                 {
-                                                    cout2 = (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire) * projet.param_affectation_horaire.cwait[succ_type]+projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type];
+                                                    cout2 = (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire) * projet.param_affectation_horaire.cwait[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type];
                                                     num_service = ii;
 
                                                 }
@@ -2548,7 +2563,7 @@ namespace Musliw
                                                     if (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd >= projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].hf)
                                                     {
 
-                                                        if (projet.reseaux[projet.reseau_actif].links[successeur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hf + projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta * 1440f - projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cveh[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type] && projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd >= projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].hf)
+                                                        if (projet.reseaux[projet.reseau_actif].links[successeur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hf /*+ projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta * 1440f*/ - projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cveh[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type] && projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd >= projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].hf)
                                                         {
                                                             gga_nq[bucket].Remove(successeur);
                                                             projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].delta = projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta;
@@ -2558,7 +2573,7 @@ namespace Musliw
                                                             projet.reseaux[projet.reseau_actif].links[successeur].h = projet.reseaux[projet.reseau_actif].links[successeur].services[projet.reseaux[projet.reseau_actif].links[successeur].service].hf + projet.reseaux[projet.reseau_actif].links[successeur].services[projet.reseaux[projet.reseau_actif].links[successeur].service].delta * 1440f;
                                                             projet.reseaux[projet.reseau_actif].links[successeur].tatt = projet.reseaux[projet.reseau_actif].links[pivot].tatt;
                                                             projet.reseaux[projet.reseau_actif].links[successeur].tatt1 = projet.reseaux[projet.reseau_actif].links[pivot].tatt1;
-                                                            projet.reseaux[projet.reseau_actif].links[successeur].tveh = projet.reseaux[projet.reseau_actif].links[pivot].tveh + projet.reseaux[projet.reseau_actif].links[successeur].services[projet.reseaux[projet.reseau_actif].links[successeur].service].hf + projet.reseaux[projet.reseau_actif].links[successeur].services[projet.reseaux[projet.reseau_actif].links[successeur].service].delta * 1440f - projet.reseaux[projet.reseau_actif].links[pivot].h;
+                                                            projet.reseaux[projet.reseau_actif].links[successeur].tveh = projet.reseaux[projet.reseau_actif].links[pivot].tveh + projet.reseaux[projet.reseau_actif].links[successeur].services[projet.reseaux[projet.reseau_actif].links[successeur].service].hf /* + projet.reseaux[projet.reseau_actif].links[successeur].services[projet.reseaux[projet.reseau_actif].links[successeur].service].delta * 1440f */- projet.reseaux[projet.reseau_actif].links[pivot].h;
                                                             projet.reseaux[projet.reseau_actif].links[successeur].tcor = projet.reseaux[projet.reseau_actif].links[pivot].tcor;
                                                             projet.reseaux[projet.reseau_actif].links[successeur].ncorr = projet.reseaux[projet.reseau_actif].links[pivot].ncorr;
                                                             projet.reseaux[projet.reseau_actif].links[successeur].l = projet.reseaux[projet.reseau_actif].links[pivot].l + projet.reseaux[projet.reseau_actif].links[successeur].longueur;
@@ -2936,14 +2951,40 @@ namespace Musliw
                                     }
                                 }
 
-
-
-                                if (projet.param_affectation_horaire.sortie_temps > 0)
+                                if (projet.param_affectation_horaire.sortie_temps == 0)
                                 {
+                                    network reseau= projet.reseaux[projet.reseau_actif];
+                                    double som_detour = 0; double nb_detour = 0; double som_oiseau = 0 ;
+                                    double d_oiseau, d_link;
+                                    foreach (link li in reseau.links)
+                                    {
+                                        d_oiseau = Math.Pow(Math.Pow((reseau.nodes[reseau.numnoeud[p]].x - reseau.nodes[li.nd].x), 2) + Math.Pow((reseau.nodes[reseau.numnoeud[p]].y - reseau.nodes[li.nd].y), 2), 0.5);
+                                        d_link= Math.Pow(Math.Pow((reseau.nodes[li.no].x - reseau.nodes[li.nd].x), 2) + Math.Pow((reseau.nodes[li.no].y - reseau.nodes[li.nd].y), 2), 0.5);
+                                        
+                                        if (d_oiseau>500 & d_oiseau-d_link<=500)
+                                        {
 
+                                            if (reseau.nodes[reseau.numnoeud[p]].x > 0 && reseau.nodes[reseau.numnoeud[p]].y > 0 && reseau.nodes[li.nd].x > 0 && reseau.nodes[li.nd].y > 0)
+                                            {
+                                                if (li.h > 0)
+                                                {
+                                                    som_detour += li.h;
+                                                    som_oiseau += Math.Pow(Math.Pow((reseau.nodes[reseau.numnoeud[p]].x - reseau.nodes[li.nd].x), 2) + Math.Pow((reseau.nodes[reseau.numnoeud[p]].y - reseau.nodes[li.nd].y), 2), 0.5);
+                                                    nb_detour++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    fich_detour.WriteLine(p + ";" + som_detour.ToString() + ";" + som_oiseau.ToString() + ";" + nb_detour.ToString());
+
+                                }
+
+                                if (projet.param_affectation_horaire.sortie_temps >0)
+                                {
                                     for (i = 0; i < projet.reseaux[projet.reseau_actif].links.Count; i++)
                                     {
                                         arrivee = i;
+                                        
                                         
                                         if (filtre.Contains(projet.reseaux[projet.reseau_actif].links[arrivee].type) || filtre.Count==0)
                                         {
@@ -3786,7 +3827,7 @@ namespace Musliw
                                                     if (projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf + projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta * 1440f <= projet.reseaux[projet.reseau_actif].links[pivot].h)
                                                     {
 
-                                                        if (projet.reseaux[projet.reseau_actif].links[predecesseur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hd - projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta * 1440f + projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cveh[pred_type] + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type] && (projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].hf <= projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].hd))
+                                                        if (projet.reseaux[projet.reseau_actif].links[predecesseur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hd /*- projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta * 1440f */+ projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cveh[pred_type] + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type] && (projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].hf <= projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].hd))
                                                         {
                                                             gga_nq[bucket].Remove(predecesseur);
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].service = num_service;
@@ -3797,7 +3838,7 @@ namespace Musliw
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].h = projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].hd + projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].delta * 60f * 24f;
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].tatt = projet.reseaux[projet.reseau_actif].links[pivot].tatt;
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].tatt1 = projet.reseaux[projet.reseau_actif].links[pivot].tatt1;
-                                                            projet.reseaux[projet.reseau_actif].links[predecesseur].tveh = projet.reseaux[projet.reseau_actif].links[pivot].tveh - projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].hd - projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].delta * 1440f + projet.reseaux[projet.reseau_actif].links[pivot].h;
+                                                            projet.reseaux[projet.reseau_actif].links[predecesseur].tveh = projet.reseaux[projet.reseau_actif].links[pivot].tveh - projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].hd /*- projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].delta * 1440f*/ + projet.reseaux[projet.reseau_actif].links[pivot].h;
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].tcor = projet.reseaux[projet.reseau_actif].links[pivot].tcor;
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].ncorr = projet.reseaux[projet.reseau_actif].links[pivot].ncorr;
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].l = projet.reseaux[projet.reseau_actif].links[pivot].l + projet.reseaux[projet.reseau_actif].links[predecesseur].longueur;
@@ -4257,6 +4298,33 @@ namespace Musliw
                                         }
                                     }
                                 }
+                                if (projet.param_affectation_horaire.sortie_temps == 0)
+                                {
+                                    network reseau = projet.reseaux[projet.reseau_actif];
+                                    double som_detour = 0; double nb_detour = 0; double som_oiseau = 0;
+                                    double d_oiseau, d_link;
+                                    foreach (link li in reseau.links)
+                                    {
+                                        d_oiseau = Math.Pow(Math.Pow((reseau.nodes[reseau.numnoeud[q]].x - reseau.nodes[li.no].x), 2) + Math.Pow((reseau.nodes[reseau.numnoeud[q]].y - reseau.nodes[li.no].y), 2), 0.5);
+                                        d_link= Math.Pow(Math.Pow((reseau.nodes[li.no].x - reseau.nodes[li.nd].x), 2) + Math.Pow((reseau.nodes[li.no].y - reseau.nodes[li.nd].y), 2), 0.5);
+                                        
+                                        if (d_oiseau>500 & d_oiseau-d_link<=500)
+                                        {
+
+                                            if (reseau.nodes[reseau.numnoeud[q]].x > 0 && reseau.nodes[reseau.numnoeud[q]].y > 0 && reseau.nodes[li.no].x > 0 && reseau.nodes[li.no].y > 0)
+                                            {
+                                                if (li.h > 0)
+                                                {
+                                                    som_detour += li.h;
+                                                    som_oiseau += Math.Pow(Math.Pow((reseau.nodes[reseau.numnoeud[q]].x - reseau.nodes[li.no].x), 2) + Math.Pow((reseau.nodes[reseau.numnoeud[q]].y - reseau.nodes[li.no].y), 2), 0.5);
+                                                    nb_detour++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    fich_detour.WriteLine(q + ";" + som_detour.ToString() + ";" + som_oiseau.ToString() + ";" + nb_detour.ToString());
+
+                                }
 
 
                                 if (projet.param_affectation_horaire.sortie_temps > 0)
@@ -4325,6 +4393,7 @@ namespace Musliw
                     fich_sortie2.Close();
                     fich_od.Close();
                     fich_noeuds.Close();
+                    fich_detour.Close();
 
                    
 
@@ -4852,10 +4921,32 @@ namespace Musliw
         }
 
 
+        public float horaire_service(Service service, int nb_jours, double heure, List<string> calendriers, int jour)
+        {
+            float h = 0;
+
+            if (nb_jours > 0)
+            {
+                for (int i = 0; i <= nb_jours; i++)
+                {
+                    if (jour + i < (calendriers[service.regime]).Length)
+                    {
+                        if (service.hd < heure && service.hd + 1440 * i < heure && (calendriers[service.regime]).Substring(jour + i, 1) == "O")
+                        {
+                            h = service.hd + 1440 * i;
+                        }
+                    }
+
+                    break;
+                }
+            }
+            return h;
+        }
             
     }
 
         
+
 
 
     
@@ -4975,6 +5066,7 @@ namespace Musliw
         public List<string> nom_calendrier = new List<string>();
         public Dictionary<string, string> noms_arcs = new Dictionary<string, string>();
         public int max_type = 0,nbturns=0,nbservices=0;
+        public Dictionary<string,List<double>> detour = new Dictionary<string,List<double>>();
     }
 
     public class etude
@@ -5013,6 +5105,7 @@ namespace Musliw
         public float tmapmax,temps_max=120;
         public int nb_pop=0;
         public string texte_filtre_sortie = "";
+
 
         public void Lit_parametres(String nom_fichier_ini)
         {

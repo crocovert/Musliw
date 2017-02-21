@@ -1,0 +1,226 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53A6A32B-D92B-4C97-A88F-0E7B12B34D89}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Musliw</RootNamespace>
+    <AssemblyName>Musliw</AssemblyName>
+    <ManifestCertificateThumbprint>E210DD66B66B9C51D46E36F2978547BBEE82408D</ManifestCertificateThumbprint>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SignAssembly>false</SignAssembly>
+    <TargetZone>LocalIntranet</TargetZone>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <PublishUrl>C:\Musliw\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Musliw</ProductName>
+    <PublisherName>CETE Nord-Picardie</PublisherName>
+    <CreateWebPageOnPublish>false</CreateWebPageOnPublish>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="aff_hor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="aff_hor.Designer.cs">
+      <DependentUpon>aff_hor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="avancement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="avancement.Designer.cs">
+      <DependentUpon>avancement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Carte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Carte.Designer.cs">
+      <DependentUpon>Carte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="carte_options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="carte_options.Designer.cs">
+      <DependentUpon>carte_options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="choix_carte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="choix_carte.Designer.cs">
+      <DependentUpon>choix_carte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="choix_donnees.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="choix_donnees.Designer.cs">
+      <DependentUpon>choix_donnees.cs</DependentUpon>
+    </Compile>
+    <Compile Include="choix_reseau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="choix_reseau.Designer.cs">
+      <DependentUpon>choix_reseau.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="donnees.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="donnees.Designer.cs">
+      <DependentUpon>donnees.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="import_matrice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="import_matrice.Designer.cs">
+      <DependentUpon>import_matrice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <EmbeddedResource Include="aff_hor.resx">
+      <DependentUpon>aff_hor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="avancement.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>avancement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Carte.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Carte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="carte_options.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>carte_options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="choix_carte.resx">
+      <DependentUpon>choix_carte.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="choix_donnees.resx">
+      <DependentUpon>choix_donnees.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="choix_reseau.resx">
+      <DependentUpon>choix_reseau.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="donnees.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>donnees.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.en.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.fr-FR.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="import_matrice.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>import_matrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <BaseApplicationManifest Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

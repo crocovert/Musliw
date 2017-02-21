@@ -1,0 +1,26 @@
+declare sub main
+
+sub main
+
+
+    Dim ind As Integer
+    Dim triangleObj As Object
+    Dim cmd As String
+dim tutu as alias
+
+    'création de la table Triangulate et association d'un partie graphique
+    cmd = "Create Table Triangulate (ID Integer) File ""c:\Triangulate.tab"""
+    Run Command cmd
+    Create Map For Triangulate 
+    ' Pour chaque triangle
+    For ind = 1 to 10
+         Create Region Into Variable triangleObj 0
+         Alter Object triangleObj  Node Add (60, 44)
+         Alter Object triangleObj  Node Add (61, 46)
+         Alter Object triangleObj  Node Add (62, 45)
+tutu=triangleobj
+         Insert Into Triangulate (ID, obj) Values (ind ,triangleObj)
+print cmd
+'         Run Command cmd
+    Next 'ind
+End Sub

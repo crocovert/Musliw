@@ -1,0 +1,354 @@
+include "mapbasic.def"
+
+declare sub main
+declare sub diag
+declare sub analyse
+declare sub change_col
+declare sub dial_ety
+declare sub maj_sens
+
+dim nom_tab as string
+dim i,nb,co,co2,j,id_tab as integer
+dim lay(255),col(255) as string
+dim echelle as float
+dim texte as string
+dim stylo as pen
+dim stylo2 as pen
+dim tab as string
+dim objet as object
+
+sub main
+stylo2=currentpen()
+echelle=1
+
+create Menu "Lignes et epaisseurs" as "Epaisseur" calling diag,"(-",
+"Sens Etiquettes" calling dial_ety
+alter menu "outils" add "Lignes et epaisseurs" as "Lignes et epaisseurs"
+end sub
+
+
+sub diag
+if numwindows()=0 then
+note "Aucune fenetre n'est ouverte"
+exit sub
+end if
+j=1
+if windowinfo(frontwindow(),WIN_INFO_TYPE)<>WIN_MAPPER then
+note "La fenetre courante n'est pas "+ chr$(13)+"une fenetre carte"
+exit sub
+end if 
+
+for i=1 to 255
+if i<=mapperinfo(frontwindow(),MAPPER_INFO_LAYERS) then
+if layerinfo(frontwindow(),i,LAYER_INFO_TYPE)=LAYER_INFO_TYPE_NORMAL then
+lay(j)=layerinfo(frontwindow(),i,LAYER_INFO_NAME)
+j=j+1
+else
+lay(i)=""
+end if
+end if
+next
+
+for i=1 to 255
+if i<=tableinfo(1,TAB_INFO_NCOLS) then
+col(i)=columninfo(1,"col"+i, COL_INFO_NAME)
+else
+col(i)=""
+end if
+next
+
+
+dialog 
+title "Epaisseur proportionnelle"
+
+control statictext
+title "Couche"
+position 10,10
+
+
+control popupmenu
+id 1
+title from variable lay
+width 100
+position 50,10
+into nom_tab
+calling change_col
+
+control statictext
+title "Colonne"
+position 10,35
+
+
+control popupmenu
+id 2
+title from variable col
+width 100
+position 50,35
+into co
+
+
+control statictext
+title "Echelle"
+position 10,60
+
+control edittext
+value echelle
+into echelle
+position 50,60
+width 80
+
+
+control penpicker
+position 10,85
+value stylo2
+into stylo2
+
+control okbutton
+
+control cancelbutton
+
+if commandinfo(CMD_INFO_DLG_OK)=true then
+call analyse
+end if
+
+end sub
+
+
+sub change_col
+
+tab=lay(readcontrolvalue(1))
+
+
+for i=1 to 255
+if i<=tableinfo(tab,TAB_INFO_NCOLS) then
+col(i)=columninfo(tab,"col"+i, COL_INFO_NAME)
+else
+col(i)=""
+end if
+next
+
+alter control 2
+title from variable col
+end sub
+
+
+
+sub analyse
+dim pos as string
+dim epais,col_obj as alias
+dim ofs,npoly,npts,i1,i2 as integer
+dim x1,y1,x2,y2,deltax,deltay as float
+for i=1 to numtables()
+if lay(nom_tab)=tableinfo(i,TAB_INFO_NAME) then
+id_tab=i
+end if
+next
+tab=tableinfo(lay(nom_tab),TAB_INFO_NAME)
+set coordsys table tab
+
+nb=tableinfo(tab,TAB_INFO_NROWS)
+set event processing off
+
+for i=1 to nb
+fetch rec i from tab
+texte=tab+".col"+co
+epais=texte
+texte=tab+".obj"
+col_obj=texte
+objet=col_obj
+stylo=makepen(Pointstopenwidth(maximum(round(echelle*epais,0.1),0.1)),styleattr(stylo2,PEN_PATTERN),styleattr(stylo2,PEN_COLOR))
+alter object objet  info OBJ_INFO_PEN , stylo
+update tab set obj=objet where rowid=i
+next
+exit sub
+
+
+
+
+
+
+
+
+if str$(objet)="Line" then
+objet=converttopline(objet)
+end if
+
+
+
+if str$(objet)="Polyline" then
+npts=objectinfo(objet,OBJ_INFO_NPOLYGONS+1)
+i1=int(npts/2)
+x1=objectnodex(objet, 1,i1)
+x2=objectnodex(objet, 1,i1+1)
+y1=objectnodey(objet, 1,i1)
+y2=objectnodey(objet, 1,i1+1)
+'note x1+" "+x2+" "+y1+" "+y2
+deltax=x2-x1
+deltay=y2-y1
+
+if deltax>=0 and deltay>0 then
+pos="below"
+elseif deltax<0 and deltay>0 then
+pos="above"
+elseif deltax<0 and deltay<=0 then
+pos="above"
+elseif deltax>=0 and deltay<=0 then
+pos="below"
+end if
+
+ofs=minimum(50,round(echelle*epais*1.5,1))
+'note pos
+texte="set map redraw off layer "+nom_tab+" label visibility off overlap off  object "+i+" position "+pos+" offset "+ofs
+run command texte
+end if
+
+'next
+end sub
+
+
+
+
+
+
+sub dial_ety
+j=1
+if numwindows()=0 then
+note "Aucune fenetre n'est ouverte"
+exit sub
+end if
+if windowinfo(frontwindow(),WIN_INFO_TYPE)<>WIN_MAPPER then
+note "La fenetre courante n'est pas "+ chr$(13)+"une fenetre carte"
+exit sub
+end if 
+
+for i=1 to 255
+if i<=mapperinfo(frontwindow(),MAPPER_INFO_LAYERS) then
+if layerinfo(frontwindow(),i,LAYER_INFO_TYPE)=LAYER_INFO_TYPE_NORMAL then
+lay(j)=layerinfo(frontwindow(),i,LAYER_INFO_NAME)
+j=j+1
+else
+lay(i)=""
+end if
+end if
+next
+
+for i=1 to 255
+if i<=tableinfo(1,TAB_INFO_NCOLS) then
+col(i)=columninfo(1,"col"+i, COL_INFO_NAME)
+else
+col(i)=""
+end if
+next
+
+dialog 
+title "sens etiquettes"
+
+control statictext
+title "Couche"
+position 10,10
+
+
+control popupmenu
+id 1
+title from variable lay
+width 100
+position 50,10
+into nom_tab
+calling change_col
+
+control statictext
+title "Colonne"
+position 10,35
+
+
+control popupmenu
+id 2
+title from variable col
+width 100
+position 50,35
+into co2
+
+
+
+control okbutton
+
+control cancelbutton
+
+if commandinfo(CMD_INFO_DLG_OK)=true then
+call maj_sens
+end if
+
+end sub
+
+
+
+
+sub maj_sens
+dim col_obj as alias
+dim nom_col as string
+dim npts,i1,pos as integer
+dim x1,y1,x2,y2,deltax,deltay as float
+
+for i=1 to numtables()
+if lay(nom_tab)=tableinfo(i,TAB_INFO_NAME) then
+id_tab=i
+end if
+next
+tab=tableinfo(lay(nom_tab),TAB_INFO_NAME)
+set coordsys table tab
+
+
+
+nb=tableinfo(tab,TAB_INFO_NROWS)
+set event processing off
+
+nom_col=columninfo(tab,"COL"+co2,COL_INFO_NAME)
+
+
+for i=1 to nb
+fetch rec i from tab
+texte=tab+".obj"
+col_obj=texte
+objet=col_obj
+
+
+if str$(objet)="Line" then
+objet=converttopline(objet)
+end if
+
+
+
+if str$(objet)="Polyline" then
+npts=objectinfo(objet,OBJ_INFO_NPOLYGONS+1)
+i1=int(npts/2)
+x1=objectnodex(objet, 1,i1)
+x2=objectnodex(objet, 1,i1+1)
+y1=objectnodey(objet, 1,i1)
+y2=objectnodey(objet, 1,i1+1)
+'note x1+" "+x2+" "+y1+" "+y2
+deltax=x2-x1
+deltay=y2-y1
+
+if deltax>=0 then
+pos=2
+else
+pos=1
+end if
+
+if columninfo(tab,"COL"+co2,COL_INFO_TYPE)=COL_TYPE_CHAR then
+texte="update "+tab+" set "+nom_col+"="+chr$(34)+pos+chr$(34)+"where rowid="+i
+else
+texte="update "+tab+" set "+nom_col+"="+pos+"where rowid="+i
+end if
+run command texte
+
+end if
+
+
+
+
+next
+
+
+
+end sub
