@@ -39,6 +39,7 @@ namespace Musliw
             checkBox3.Checked = param.sortie_services;
             checkBox4.Checked = param.sortie_turns;
             checkBox5.Checked = param.sortie_noeuds;
+            checkBox5.Checked = param.sortie_isoles;
             comboBox1.SelectedIndex = param.sortie_temps;
             comboBox2.SelectedIndex = param.algorithme;
             textBox2.Text = param.texte_coef_tmap;
@@ -70,6 +71,7 @@ namespace Musliw
             checkBox3.Checked = param.sortie_services;
             checkBox4.Checked = param.sortie_turns;
             checkBox5.Checked = param.sortie_noeuds;
+            checkBox6.Checked = param.sortie_isoles;
             comboBox1.SelectedIndex = param.sortie_temps;
             comboBox2.SelectedIndex = param.algorithme;
             textBox2.Text = param.texte_coef_tmap;
@@ -91,6 +93,7 @@ namespace Musliw
             textBox16.Text = param.texte_toll.ToString();
             textBox17.Text = param.texte_filtre_sortie.ToString();
             textBox18.Text = param.temps_max.ToString();
+
             ToolTip info_bulle = new ToolTip();
             info_bulle.SetToolTip(checkBox1, "Cocher pour obtenir le détail des itinéraires");
             info_bulle.SetToolTip(checkBox2, "Cocher pour interdire les demi-tours");
@@ -115,6 +118,7 @@ namespace Musliw
             info_bulle.SetToolTip(textBox17, "Filtre type de tronçon temps détaillés");
             info_bulle.SetToolTip(textBox18, "cout maximum fichier résultat");
             info_bulle.SetToolTip(checkBox5, "Sortie résultats par noeuds");
+            info_bulle.SetToolTip(checkBox6, "Sortie arcs isolés");
 
         }
 
@@ -149,6 +153,7 @@ namespace Musliw
             param.pu = Convert.ToSingle(textBox12.Text);
             param.texte_filtre_sortie = textBox17.Text;
             param.sortie_noeuds = checkBox5.Checked;
+            param.sortie_isoles = checkBox6.Checked;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
 

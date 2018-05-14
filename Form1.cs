@@ -34,6 +34,7 @@ namespace Musliw
             projet.param_affectation_horaire.texte_filtre_sortie = "";
             projet.param_affectation_horaire.temps_max = 60;
             projet.param_affectation_horaire.sortie_noeuds = true;
+            projet.param_affectation_horaire.sortie_isoles = false;
 
 
         }
@@ -59,7 +60,7 @@ namespace Musliw
             string nom_reseau = openFileDialog1.FileName;
             if (System.IO.File.Exists(nom_reseau))
             {
-                System.IO.StreamReader fichier_reseau = new System.IO.StreamReader(nom_reseau);
+                System.IO.StreamReader fichier_reseau = new System.IO.StreamReader(nom_reseau,Encoding.UTF8,true);
                 projet.reseaux[num_res].matrices.Add(new matrix());
                 do
                 {
@@ -364,7 +365,7 @@ namespace Musliw
             openFileDialog1.ShowDialog();
             if (System.IO.File.Exists(openFileDialog1.FileName))
             {
-                System.IO.StreamReader fichier_matrice = new System.IO.StreamReader(openFileDialog1.FileName);
+                System.IO.StreamReader fichier_matrice = new System.IO.StreamReader(openFileDialog1.FileName,System.Text.Encoding.UTF8);
                 while (fichier_matrice.EndOfStream == false)
                 {
                     chaine = fichier_matrice.ReadLine();
@@ -439,7 +440,8 @@ namespace Musliw
                     for (j = 0; j < projet.reseaux[projet.reseau_actif].nodes[depart].succ.Count; j++)
                     {
                         successeur = projet.reseaux[projet.reseau_actif].nodes[depart].succ[j]; 
-                        bucket = Convert.ToInt32((Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra));
+                        //bucket = Convert.ToInt32((Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra));
+                        bucket=Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                         while (bucket >= gga_nq.Count)
                         {
                             gga_nq.Add(new List<int>());
@@ -477,7 +479,8 @@ namespace Musliw
                                 projet.reseaux[projet.reseau_actif].links[successeur].touche = 1;
                                 projet.reseaux[projet.reseau_actif].links[successeur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + projet.reseaux[projet.reseau_actif].links[successeur].temps;
                                 projet.reseaux[projet.reseau_actif].links[successeur].tmap = projet.reseaux[projet.reseau_actif].links[pivot].tmap + projet.reseaux[projet.reseau_actif].links[successeur].longueur;
-                                bucket = Convert.ToInt32((Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra));
+                                //bucket = Convert.ToInt32(Math.Truncate(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra));
+                                bucket=Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                 while (bucket >= gga_nq.Count)
                                 {
                                     gga_nq.Add(new List<int>());
@@ -490,14 +493,15 @@ namespace Musliw
                             {
                                 if (projet.reseaux[projet.reseau_actif].links[successeur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + projet.reseaux[projet.reseau_actif].links[successeur].temps)
                                 {
-                                    bucket = Convert.ToInt32(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra);
-
+                                    //bucket = Convert.ToInt32(Math.Truncate(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra));
+                                    bucket=Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                     projet.reseaux[projet.reseau_actif].links[successeur].touche = 2;
                                     projet.reseaux[projet.reseau_actif].links[successeur].tmap = projet.reseaux[projet.reseau_actif].links[pivot].tmap + projet.reseaux[projet.reseau_actif].links[successeur].longueur;
                                     projet.reseaux[projet.reseau_actif].links[successeur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + projet.reseaux[projet.reseau_actif].links[successeur].temps;
                                     projet.reseaux[projet.reseau_actif].links[successeur].pivot = pivot;
                                     gga_nq[bucket].Remove(successeur);
-                                    bucket = Convert.ToInt32(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra);
+                                    //bucket = Convert.ToInt32(Math.Truncate(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout, 2) / projet.param_affectation_horaire.param_dijkstra));
+                                    bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                     gga_nq[bucket].Add(successeur);
 
                                 }
@@ -614,9 +618,9 @@ namespace Musliw
             System.IO.FileStream flux;
             
                 flux = new System.IO.FileStream(nom_reseau, System.IO.FileMode.Open);
-                System.IO.StreamReader fichier_reseau = new System.IO.StreamReader(flux);
+                System.IO.StreamReader fichier_reseau = new System.IO.StreamReader(flux,Encoding.UTF8);
                 //   projet.reseaux[num_res].matrices.Add(new matrix());
-                System.IO.StreamWriter fich_log = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_log.txt");
+                System.IO.StreamWriter fich_log = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_log.txt", false, System.Text.Encoding.UTF8);
                 fich_log.WriteLine("Version: "+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
                 fich_log.WriteLine("Début de la procédure: " + System.DateTime.Now.ToString("dddd dd MMMM yyyy HH:mm:ss.fff"));
                 fich_log.WriteLine("Paramètres par défaut:");
@@ -644,6 +648,7 @@ namespace Musliw
                 fich_log.WriteLine("Filtre type de tronçons:" + aff_hor.param.texte_filtre_sortie.ToString());
                 fich_log.WriteLine("Cout maximal:" + aff_hor.param.temps_max.ToString());
                 fich_log.WriteLine("Sortie noeuds:" + aff_hor.param.sortie_noeuds.ToString());
+                fich_log.WriteLine("Sortie isoles:" + aff_hor.param.sortie_isoles.ToString());
 
                 
                 projet.reseaux[projet.reseau_actif].nom = System.IO.Path.GetFileNameWithoutExtension(nom_reseau);
@@ -1123,7 +1128,7 @@ namespace Musliw
                     float tps_mvt;
                     flux.Close();
                     flux = new System.IO.FileStream(nom_penalites, System.IO.FileMode.Open);
-                    System.IO.StreamReader fichier_penalites = new System.IO.StreamReader(flux);
+                    System.IO.StreamReader fichier_penalites = new System.IO.StreamReader(flux,System.Text.Encoding.UTF8);
                     while (fichier_penalites.EndOfStream == false)
                     {
                         if (avancement.progressBar1.Value < (int)((100 * flux.Position) / flux.Length) - 4)
@@ -1223,14 +1228,15 @@ namespace Musliw
                 // graph growth aglorithm with buckets
                 if (projet.param_affectation_horaire.algorithme <= 1)
                 {
-                    
 
-                    System.IO.StreamWriter fich_sortie = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_temps.txt");
-                    System.IO.StreamWriter fich_sortie2 = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_chemins.txt");
-                    System.IO.StreamWriter fich_result = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_aff.txt");
-                    System.IO.StreamWriter fich_od = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_od.txt");
-                    System.IO.StreamWriter fich_noeuds = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_noeuds.txt");
-                    System.IO.StreamWriter fich_detour = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_detour.txt");
+
+                    System.IO.StreamWriter fich_sortie = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_temps.txt", false, Encoding.UTF8);
+                    System.IO.StreamWriter fich_sortie2 = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_chemins.txt", false, Encoding.UTF8);
+                    System.IO.StreamWriter fich_result = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_aff.txt", false, Encoding.UTF8);
+                    System.IO.StreamWriter fich_od = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_od.txt", false, Encoding.UTF8);
+                    System.IO.StreamWriter fich_noeuds = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_noeuds.txt", false, Encoding.UTF8);
+                    System.IO.StreamWriter fich_detour = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_detour.txt", false, Encoding.UTF8);
+                    System.IO.StreamWriter fich_isoles = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_isoles.txt", false, Encoding.UTF8);
                     Ecrit_parametres(projet.param_affectation_horaire.nom_sortie + "_param.txt");
                     fich_sortie.WriteLine("id;o;ij;ligne;numtrc;jour;heureo;heured;temps;tveh;tmap;tatt;tcorr;ncorr;tatt1;cout;longueur;pole;volau;precedent;type;toll");
                     fich_sortie2.WriteLine("id;o;d;jour;heure;i;j;ligne;service;temps;heureo;tveh;tmap;tatt;tcorr;ncorr;tatt1;cout;longueur;pole;volau;boai;alij;texte;type;toll");
@@ -1269,7 +1275,7 @@ namespace Musliw
                     flux.Close();
                     
                     flux = new System.IO.FileStream(nom_matrice, System.IO.FileMode.Open);
-                    System.IO.StreamReader fichier_matrice = new System.IO.StreamReader(flux);
+                    System.IO.StreamReader fichier_matrice = new System.IO.StreamReader(flux,System.Text.Encoding.UTF8);
                     avancement.progressBar1.Maximum = 100;
                     avancement.progressBar1.Value = 0;
                     avancement.textBox1.Text = "Calcul:" + 0 + "%";
@@ -1541,15 +1547,15 @@ namespace Musliw
                         }
                         if (System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ".")
                         {
-                            projet.param_affectation_horaire.nb_jours = int.Parse(ch[13].Split(type_delim, StringSplitOptions.None)[0]);
-                            projet.param_affectation_horaire.tmapmax = float.Parse(ch[14].Replace(',', '.').Split(type_delim, StringSplitOptions.None)[0]);
+                            projet.param_affectation_horaire.nb_jours = int.Parse(ch[14].Split(type_delim, StringSplitOptions.None)[0]);
+                            projet.param_affectation_horaire.tmapmax = float.Parse(ch[15].Replace(',', '.').Split(type_delim, StringSplitOptions.None)[0]);
                             projet.param_affectation_horaire.temps_max = float.Parse(ch[17].Replace(',', '.').Split(type_delim, StringSplitOptions.None)[0]);
                             
                         }
                         else
                         {
-                            projet.param_affectation_horaire.nb_jours = int.Parse(ch[13].Split(type_delim, StringSplitOptions.None)[0]);
-                            projet.param_affectation_horaire.tmapmax = float.Parse(ch[14].Replace('.', ',').Split(type_delim, StringSplitOptions.None)[0]);
+                            projet.param_affectation_horaire.nb_jours = int.Parse(ch[14].Split(type_delim, StringSplitOptions.None)[0]);
+                            projet.param_affectation_horaire.tmapmax = float.Parse(ch[15].Replace('.', ',').Split(type_delim, StringSplitOptions.None)[0]);
                             projet.param_affectation_horaire.temps_max = float.Parse(ch[17].Replace('.', ',').Split(type_delim, StringSplitOptions.None)[0]);
 
                         }
@@ -1898,21 +1904,21 @@ namespace Musliw
                         {
                             if (System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ".")
                             {
-                                projet.param_affectation_horaire.sortie_chemins = bool.Parse(ch[17].Replace(",","."));
-                                projet.param_affectation_horaire.sortie_temps = int.Parse(ch[18].Replace(",", "."));
-                                projet.param_affectation_horaire.algorithme = int.Parse(ch[19].Replace(",", "."));
-                                projet.param_affectation_horaire.param_dijkstra = float.Parse(ch[20].Replace(",", "."));
-                                projet.param_affectation_horaire.max_nb_buckets = float.Parse(ch[21].Replace(",", "."));
-                                projet.param_affectation_horaire.pu = float.Parse(ch[22].Replace(",", "."));
+                                projet.param_affectation_horaire.sortie_chemins = bool.Parse(ch[18].Replace(",","."));
+                                projet.param_affectation_horaire.sortie_temps = int.Parse(ch[19].Replace(",", "."));
+                                projet.param_affectation_horaire.algorithme = int.Parse(ch[20].Replace(",", "."));
+                                projet.param_affectation_horaire.param_dijkstra = float.Parse(ch[21].Replace(",", "."));
+                                projet.param_affectation_horaire.max_nb_buckets = float.Parse(ch[22].Replace(",", "."));
+                                projet.param_affectation_horaire.pu = float.Parse(ch[23].Replace(",", "."));
                             }
                             else
                             {
-                                projet.param_affectation_horaire.sortie_chemins = bool.Parse(ch[17].Replace(".", ","));
-                                projet.param_affectation_horaire.sortie_temps = int.Parse(ch[18].Replace(".", ","));
-                                projet.param_affectation_horaire.algorithme = int.Parse(ch[19].Replace(".", ","));
-                                projet.param_affectation_horaire.param_dijkstra = float.Parse(ch[20].Replace(".", ","));
-                                projet.param_affectation_horaire.max_nb_buckets = float.Parse(ch[21].Replace(".", ","));
-                                projet.param_affectation_horaire.pu = float.Parse(ch[22].Replace(".", ","));
+                                projet.param_affectation_horaire.sortie_chemins = bool.Parse(ch[18].Replace(".", ","));
+                                projet.param_affectation_horaire.sortie_temps = int.Parse(ch[19].Replace(".", ","));
+                                projet.param_affectation_horaire.algorithme = int.Parse(ch[20].Replace(".", ","));
+                                projet.param_affectation_horaire.param_dijkstra = float.Parse(ch[21].Replace(".", ","));
+                                projet.param_affectation_horaire.max_nb_buckets = float.Parse(ch[22].Replace(".", ","));
+                                projet.param_affectation_horaire.pu = float.Parse(ch[23].Replace(".", ","));
 
                             }
 
@@ -1930,7 +1936,7 @@ namespace Musliw
 
                         if (ch.Length > 24)
                         {
-                                projet.param_affectation_horaire.texte_filtre_sortie = ch[23];
+                                projet.param_affectation_horaire.texte_filtre_sortie = ch[24];
                         }
                         //MessageBox.Show(p.ToString() + " " + q.ToString() + " " + horaire.ToString());
                         //avancement.textBox1.Text = p.ToString() + " " + q.ToString() + " " + horaire.ToString();
@@ -2107,18 +2113,9 @@ namespace Musliw
                                             }
 
 
-                                            Service s = projet.reseaux[projet.reseau_actif].links[successeur].services[ii];
-                                            int nb_jours=projet.param_affectation_horaire.nb_jours;
-                                            float hs = horaire_service(s, projet.param_affectation_horaire.nb_jours, horaire, projet.reseaux[projet.reseau_actif].nom_calendrier, jour);
-                                            if ( hs- horaire < max_correspondance)
+                                            if (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire < max_correspondance)
                                             {
-                                                cout2 = (hs+projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd  - horaire) * projet.param_affectation_horaire.cwait[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type];
-                                                num_service = ii;
-
-                                            }
-
-                                            {
-                                                if (((projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire) * projet.param_affectation_horaire.cwait[succ_type])+ projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type] < cout2 && delta > -1)
+                                                if (((projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire) * projet.param_affectation_horaire.cwait[succ_type]) + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type] < cout2 && delta > -1)
                                                 {
                                                     cout2 = (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[ii].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[ii].delta * 1440f - horaire) * projet.param_affectation_horaire.cwait[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type];
                                                     num_service = ii;
@@ -2515,6 +2512,7 @@ namespace Musliw
 
                                                     if (projet.reseaux[projet.reseau_actif].links[successeur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (penalite + projet.reseaux[projet.reseau_actif].links[successeur].temps) * projet.param_affectation_horaire.coef_tmap[succ_type] * projet.param_affectation_horaire.cmap[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type])
                                                     {
+                                                        bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                                         gga_nq[bucket].Remove(successeur);
                                                         projet.reseaux[projet.reseau_actif].links[successeur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[successeur].temps + penalite) * projet.param_affectation_horaire.coef_tmap[succ_type] * projet.param_affectation_horaire.cmap[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type];
                                                         projet.reseaux[projet.reseau_actif].links[successeur].h = projet.reseaux[projet.reseau_actif].links[pivot].h + (projet.reseaux[projet.reseau_actif].links[successeur].temps) * projet.param_affectation_horaire.coef_tmap[succ_type]+penalite;
@@ -2565,6 +2563,7 @@ namespace Musliw
 
                                                         if (projet.reseaux[projet.reseau_actif].links[successeur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hf /*+ projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta * 1440f*/ - projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cveh[succ_type] + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type] && projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd >= projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].hf)
                                                         {
+                                                            bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                                             gga_nq[bucket].Remove(successeur);
                                                             projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].delta = projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta;
                                                             projet.reseaux[projet.reseau_actif].links[successeur].service = num_service;
@@ -2649,6 +2648,7 @@ namespace Musliw
                                                 {
                                                     if (projet.reseaux[projet.reseau_actif].links[successeur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].delta * 1440f - projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cwait[succ_type] + (temps_correspondance * projet.param_affectation_horaire.cboa[succ_type]) + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type])
                                                     {
+                                                        bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[successeur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                                         gga_nq[bucket].Remove(successeur);
                                                         projet.reseaux[projet.reseau_actif].links[successeur].service = num_service;
                                                         projet.reseaux[projet.reseau_actif].links[successeur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd) * projet.param_affectation_horaire.cveh[succ_type] + (projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].hd + projet.reseaux[projet.reseau_actif].links[successeur].services[num_service].delta * 1440f - projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cwait[succ_type] + (temps_correspondance * projet.param_affectation_horaire.cboa[succ_type]) + projet.reseaux[projet.reseau_actif].links[successeur].toll * projet.param_affectation_horaire.ctoll[succ_type];
@@ -3031,6 +3031,16 @@ namespace Musliw
                                                     fich_sortie.WriteLine(texte);
                                                 }
                                             }
+                                            else if (projet.reseaux[projet.reseau_actif].links[arrivee].touche == 0 && projet.param_affectation_horaire.sortie_isoles == true)
+                                            {
+                                                texte = projet.reseaux[projet.reseau_actif].nodes[projet.reseaux[projet.reseau_actif].links[arrivee].no].i;
+                                                texte += "-" + projet.reseaux[projet.reseau_actif].nodes[projet.reseaux[projet.reseau_actif].links[arrivee].nd].i;
+                                                texte += ";" + (projet.reseaux[projet.reseau_actif].links[arrivee].ligne).ToString("0");
+                                                texte += ";" + i.ToString("0");
+                                                fich_isoles.WriteLine(texte);
+
+                                            }
+
                                         }
                                     }
                                 }
@@ -3625,7 +3635,7 @@ namespace Musliw
 
 
                                                     }
-                                                    if ((projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].hf + projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].delta * 1440f + max_correspondance > projet.reseaux[projet.reseau_actif].links[pivot].h) && (projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].hf + projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].delta * 1440f + temps_correspondance <= projet.reseaux[projet.reseau_actif].links[pivot].h))
+                                                    if (/*(projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].hf + projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].delta * 1440f + max_correspondance > projet.reseaux[projet.reseau_actif].links[pivot].h) && */ (projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].hf + projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].delta * 1440f /*+ temps_correspondance*/ <= projet.reseaux[projet.reseau_actif].links[pivot].h))
                                                     
                                                     {
                                                         if ((projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].hd) * projet.param_affectation_horaire.cveh[pred_type] + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[ii].delta * 60f * 24f + projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cwait[pred_type]) + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type] < cout2 && delta < 1)
@@ -3716,6 +3726,8 @@ namespace Musliw
 
                                                     if (projet.reseaux[projet.reseau_actif].links[predecesseur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (penalite + projet.reseaux[projet.reseau_actif].links[predecesseur].temps) * projet.param_affectation_horaire.coef_tmap[pred_type] * projet.param_affectation_horaire.cmap[pred_type] + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type])
                                                     {
+
+                                                        bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[predecesseur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets))); 
                                                         gga_nq[bucket].Remove(predecesseur);
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + (penalite + projet.reseaux[projet.reseau_actif].links[predecesseur].temps) * projet.param_affectation_horaire.coef_tmap[pred_type] * projet.param_affectation_horaire.cmap[pred_type] + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type];
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].h = projet.reseaux[projet.reseau_actif].links[pivot].h - (projet.reseaux[projet.reseau_actif].links[predecesseur].temps) * projet.param_affectation_horaire.coef_tmap[pred_type] - penalite;
@@ -3778,6 +3790,7 @@ namespace Musliw
 
                                                     if (projet.reseaux[projet.reseau_actif].links[predecesseur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (penalite + projet.reseaux[projet.reseau_actif].links[predecesseur].temps) * projet.param_affectation_horaire.coef_tmap[pred_type] * projet.param_affectation_horaire.cmap[pred_type] + projet.param_affectation_horaire.cboa[pivot_type] * temps_correspondance + projet.param_affectation_horaire.cwait[pred_type] * temps_correspondance + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type])
                                                     {
+                                                        bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[predecesseur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                                         gga_nq[bucket].Remove(predecesseur);
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + (penalite + projet.reseaux[projet.reseau_actif].links[predecesseur].temps) * projet.param_affectation_horaire.coef_tmap[pred_type] * projet.param_affectation_horaire.cmap[pred_type] + projet.param_affectation_horaire.cboa[pivot_type] * temps_correspondance + projet.param_affectation_horaire.cwait[pred_type] * temps_correspondance+ projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type];
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].h = projet.reseaux[projet.reseau_actif].links[pivot].h - (projet.reseaux[projet.reseau_actif].links[predecesseur].temps) * projet.param_affectation_horaire.coef_tmap[pred_type] - temps_correspondance - penalite;
@@ -3829,6 +3842,7 @@ namespace Musliw
 
                                                         if (projet.reseaux[projet.reseau_actif].links[predecesseur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hd /*- projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta * 1440f */+ projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cveh[pred_type] + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type] && (projet.reseaux[projet.reseau_actif].links[predecesseur].services[projet.reseaux[projet.reseau_actif].links[predecesseur].service].hf <= projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].hd))
                                                         {
+                                                            bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[predecesseur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                                             gga_nq[bucket].Remove(predecesseur);
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].service = num_service;
                                                             projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].delta = projet.reseaux[projet.reseau_actif].links[pivot].services[projet.reseaux[projet.reseau_actif].links[pivot].service].delta;
@@ -3913,6 +3927,7 @@ namespace Musliw
                                                 {
                                                     if (projet.reseaux[projet.reseau_actif].links[predecesseur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hd) * projet.param_affectation_horaire.cveh[pred_type] + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].delta * 1440f + projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cwait[pred_type] + (temps_correspondance * projet.param_affectation_horaire.cboa[pivot_type]) + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type])
                                                     {
+                                                        bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[predecesseur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                                         gga_nq[bucket].Remove(predecesseur);
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].service = num_service;
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hd) * projet.param_affectation_horaire.cveh[pred_type] + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].delta * 1440f + projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cwait[pred_type] + (temps_correspondance * projet.param_affectation_horaire.cboa[pivot_type]) + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type];
@@ -4004,6 +4019,7 @@ namespace Musliw
                                                     if (projet.reseaux[projet.reseau_actif].links[predecesseur].cout > projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hd) * projet.param_affectation_horaire.cveh[pred_type] + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].delta * 1440f + projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cwait[pred_type] + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type])
                                                     {
 
+                                                        bucket = Convert.ToInt32(Math.Truncate(Math.Min(Math.Pow(projet.reseaux[projet.reseau_actif].links[predecesseur].cout / projet.param_affectation_horaire.param_dijkstra, projet.param_affectation_horaire.pu), projet.param_affectation_horaire.max_nb_buckets)));
                                                         gga_nq[bucket].Remove(predecesseur);
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].service = num_service;
                                                         projet.reseaux[projet.reseau_actif].links[predecesseur].cout = projet.reseaux[projet.reseau_actif].links[pivot].cout + (projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hd) * projet.param_affectation_horaire.cveh[pred_type] + (-projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].hf - projet.reseaux[projet.reseau_actif].links[predecesseur].services[num_service].delta * 1440f + projet.reseaux[projet.reseau_actif].links[pivot].h) * projet.param_affectation_horaire.cwait[pred_type] + projet.reseaux[projet.reseau_actif].links[predecesseur].toll * projet.param_affectation_horaire.ctoll[pred_type];
@@ -4376,6 +4392,15 @@ namespace Musliw
                                                     fich_sortie.WriteLine(texte);
                                                 }
                                             }
+                                            else if (projet.reseaux[projet.reseau_actif].links[arrivee].touche == 0 && projet.param_affectation_horaire.sortie_isoles==true)
+                                            {
+                                                texte = projet.reseaux[projet.reseau_actif].nodes[projet.reseaux[projet.reseau_actif].links[arrivee].no].i;
+                                                texte += "-" + projet.reseaux[projet.reseau_actif].nodes[projet.reseaux[projet.reseau_actif].links[arrivee].nd].i;
+                                                texte += ";" + (projet.reseaux[projet.reseau_actif].links[arrivee].ligne).ToString("0");
+                                                texte += ";" + i.ToString("0");
+                                                fich_isoles.WriteLine(texte);
+
+                                            }
                                         }
                                     }
                                 }
@@ -4394,6 +4419,7 @@ namespace Musliw
                     fich_od.Close();
                     fich_noeuds.Close();
                     fich_detour.Close();
+                    fich_isoles.Close();
 
                    
 
@@ -4420,8 +4446,8 @@ namespace Musliw
                     fich_result.Close();
                     //projet.reseaux.Remove(projet.reseaux[projet.reseau_actif]);
                     if (projet.param_affectation_horaire.sortie_services == true)
-                    { 
-                        System.IO.StreamWriter fich_services = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_services.txt");
+                    {
+                        System.IO.StreamWriter fich_services = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_services.txt", false, System.Text.Encoding.UTF8);
                         string texte="";
                         fich_services.WriteLine("i;j;ligne;service;hd;hf;regime;volau;boia;alij;texte;type");
                         for (i = 0; i < projet.reseaux[projet.reseau_actif].links.Count; i++)
@@ -4456,7 +4482,7 @@ namespace Musliw
                     }
                     if (projet.param_affectation_horaire.sortie_turns == true)
                     {
-                        System.IO.StreamWriter fich_turns = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_transferts.txt");
+                        System.IO.StreamWriter fich_turns = new System.IO.StreamWriter(projet.param_affectation_horaire.nom_sortie + "_transferts.txt", false, System.Text.Encoding.UTF8);
                         string texte = "";
                         //int k=0;
                         fich_turns.WriteLine("j;i;lignei;k;lignek;textei;textek;volau");
@@ -4550,7 +4576,7 @@ namespace Musliw
 
             if (System.IO.File.Exists(nom_reseau))
             {
-                System.IO.StreamReader fichier_reseau = new System.IO.StreamReader(nom_reseau);
+                System.IO.StreamReader fichier_reseau = new System.IO.StreamReader(nom_reseau,Encoding.UTF8);
                 projet.reseaux[num_res].matrices.Add(new matrix());
 
                 projet.reseaux[projet.reseau_actif].nom = System.IO.Path.GetFileNameWithoutExtension(nom_reseau);
@@ -4837,8 +4863,8 @@ namespace Musliw
 
         public void Ecrit_parametres(string nom_fichier_ini)
         {
-            
-            System.IO.StreamWriter fich_ini = new System.IO.StreamWriter(nom_fichier_ini);
+
+            System.IO.StreamWriter fich_ini = new System.IO.StreamWriter(nom_fichier_ini, false, System.Text.Encoding.UTF8);
             String texte = projet.param_affectation_horaire.algorithme +
                 "\n" + projet.param_affectation_horaire.demitours +
                 "\n" + projet.param_affectation_horaire.max_nb_buckets +
@@ -4864,7 +4890,9 @@ namespace Musliw
                 "\n" + projet.param_affectation_horaire.texte_toll +
                 "\n" + projet.param_affectation_horaire.texte_filtre_sortie +
                 "\n" + projet.param_affectation_horaire.temps_max +
-                "\n" + projet.param_affectation_horaire.sortie_noeuds;
+                "\n" + projet.param_affectation_horaire.sortie_noeuds+
+                "\n" + projet.param_affectation_horaire.sortie_isoles;
+                
             fich_ini.WriteLine(texte);
             fich_ini.Close();
 
@@ -5090,7 +5118,7 @@ namespace Musliw
         public Dictionary<String, float> cveh = new Dictionary<String,float>(1);
         public Dictionary<String, float> ctoll = new Dictionary<String,float>(1);
         public float param_dijkstra, pu;
-        public bool sortie_chemins,demitours=true,sortie_services=false,sortie_turns=false,test_OK=false,sortie_noeuds=true;
+        public bool sortie_chemins,demitours=true,sortie_services=false,sortie_turns=false,test_OK=false,sortie_noeuds=true,sortie_isoles=false;
             public int sortie_temps;
             public int algorithme = 1;
         public float max_nb_buckets=10000;
@@ -5111,7 +5139,7 @@ namespace Musliw
         {
 
 
-            System.IO.StreamReader fich_ini = new System.IO.StreamReader(nom_fichier_ini);
+            System.IO.StreamReader fich_ini = new System.IO.StreamReader(nom_fichier_ini,System.Text.Encoding.UTF8 );
 
             algorithme = int.Parse(fich_ini.ReadLine());
             demitours = bool.Parse(fich_ini.ReadLine());
@@ -5122,7 +5150,7 @@ namespace Musliw
             nom_reseau = fich_ini.ReadLine();
             nom_sortie = fich_ini.ReadLine();
             param_dijkstra = int.Parse(fich_ini.ReadLine());
-            pu = int.Parse(fich_ini.ReadLine());
+            pu = float.Parse(fich_ini.ReadLine());
             sortie_chemins = bool.Parse(fich_ini.ReadLine());
             sortie_services = bool.Parse(fich_ini.ReadLine());
             sortie_temps = int.Parse(fich_ini.ReadLine());
@@ -5155,6 +5183,10 @@ namespace Musliw
             if (fich_ini.EndOfStream == false)
             {
                 sortie_noeuds = bool.Parse(fich_ini.ReadLine());
+            }
+            if (fich_ini.EndOfStream == false)
+            {
+                sortie_isoles = bool.Parse(fich_ini.ReadLine());
             }
             fich_ini.Close();
 

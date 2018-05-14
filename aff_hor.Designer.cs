@@ -46,7 +46,6 @@ namespace Musliw
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -69,7 +68,6 @@ namespace Musliw
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.textBox14 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox16 = new System.Windows.Forms.TextBox();
@@ -79,29 +77,31 @@ namespace Musliw
             this.textBox18 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.button7 = new System.Windows.Forms.Button();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             resources.ApplyResources(this.button1, "button1");
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.button2, "button2");
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.button3, "button3");
+            this.button3.ForeColor = System.Drawing.Color.Black;
             this.button3.Name = "button3";
             this.button3.TabStop = false;
             this.button3.UseVisualStyleBackColor = true;
@@ -109,8 +109,8 @@ namespace Musliw
             // 
             // button4
             // 
-            this.button4.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.button4, "button4");
+            this.button4.ForeColor = System.Drawing.Color.Black;
             this.button4.Name = "button4";
             this.button4.TabStop = false;
             this.button4.UseVisualStyleBackColor = true;
@@ -118,46 +118,46 @@ namespace Musliw
             // 
             // textBox2
             // 
-            this.textBox2.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox2, "textBox2");
+            this.textBox2.ForeColor = System.Drawing.Color.Black;
             this.textBox2.Name = "textBox2";
             // 
             // textBox3
             // 
-            this.textBox3.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox3, "textBox3");
+            this.textBox3.ForeColor = System.Drawing.Color.Black;
             this.textBox3.Name = "textBox3";
             this.textBox3.TabStop = false;
             // 
             // textBox4
             // 
-            this.textBox4.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox4, "textBox4");
+            this.textBox4.ForeColor = System.Drawing.Color.Black;
             this.textBox4.Name = "textBox4";
             this.textBox4.TabStop = false;
             // 
             // textBox5
             // 
-            this.textBox5.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox5, "textBox5");
+            this.textBox5.ForeColor = System.Drawing.Color.Black;
             this.textBox5.Name = "textBox5";
             // 
             // textBox6
             // 
-            this.textBox6.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox6, "textBox6");
+            this.textBox6.ForeColor = System.Drawing.Color.Black;
             this.textBox6.Name = "textBox6";
             // 
             // textBox7
             // 
-            this.textBox7.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox7, "textBox7");
+            this.textBox7.ForeColor = System.Drawing.Color.Black;
             this.textBox7.Name = "textBox7";
             // 
             // textBox8
             // 
-            this.textBox8.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox8, "textBox8");
+            this.textBox8.ForeColor = System.Drawing.Color.Black;
             this.textBox8.Name = "textBox8";
             // 
             // label2
@@ -192,15 +192,9 @@ namespace Musliw
             // 
             // textBox9
             // 
-            this.textBox9.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox9, "textBox9");
+            this.textBox9.ForeColor = System.Drawing.Color.Black;
             this.textBox9.Name = "textBox9";
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Name = "label7";
             // 
             // openFileDialog1
             // 
@@ -216,8 +210,8 @@ namespace Musliw
             // 
             // textBox1
             // 
-            this.textBox1.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.ForeColor = System.Drawing.Color.Black;
             this.textBox1.Name = "textBox1";
             // 
             // label8
@@ -234,14 +228,14 @@ namespace Musliw
             // 
             // textBox10
             // 
-            this.textBox10.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox10, "textBox10");
+            this.textBox10.ForeColor = System.Drawing.Color.Black;
             this.textBox10.Name = "textBox10";
             // 
             // textBox11
             // 
-            this.textBox11.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox11, "textBox11");
+            this.textBox11.ForeColor = System.Drawing.Color.Black;
             this.textBox11.Name = "textBox11";
             // 
             // label10
@@ -259,13 +253,13 @@ namespace Musliw
             // 
             // comboBox1
             // 
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.ForeColor = System.Drawing.Color.Black;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             resources.GetString("comboBox1.Items"),
             resources.GetString("comboBox1.Items1"),
             resources.GetString("comboBox1.Items2")});
-            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
             // 
             // label1
@@ -284,18 +278,18 @@ namespace Musliw
             // 
             // comboBox2
             // 
+            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.ForeColor = System.Drawing.Color.Black;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             resources.GetString("comboBox2.Items"),
             resources.GetString("comboBox2.Items1")});
-            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.Name = "comboBox2";
             // 
             // textBox12
             // 
-            this.textBox12.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox12, "textBox12");
+            this.textBox12.ForeColor = System.Drawing.Color.Black;
             this.textBox12.Name = "textBox12";
             // 
             // label12
@@ -306,15 +300,15 @@ namespace Musliw
             // 
             // textBox13
             // 
-            this.textBox13.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox13, "textBox13");
+            this.textBox13.ForeColor = System.Drawing.Color.Black;
             this.textBox13.Name = "textBox13";
             this.textBox13.TabStop = false;
             // 
             // button5
             // 
-            this.button5.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.button5, "button5");
+            this.button5.ForeColor = System.Drawing.Color.Black;
             this.button5.Name = "button5";
             this.button5.TabStop = false;
             this.button5.UseVisualStyleBackColor = true;
@@ -343,8 +337,8 @@ namespace Musliw
             // 
             // textBox14
             // 
-            this.textBox14.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox14, "textBox14");
+            this.textBox14.ForeColor = System.Drawing.Color.Black;
             this.textBox14.Name = "textBox14";
             // 
             // label13
@@ -353,12 +347,6 @@ namespace Musliw
             this.label13.ForeColor = System.Drawing.Color.Black;
             this.label13.Name = "label13";
             this.label13.Click += new System.EventHandler(this.label13_Click);
-            // 
-            // label14
-            // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Name = "label14";
             // 
             // label15
             // 
@@ -369,14 +357,14 @@ namespace Musliw
             // 
             // textBox15
             // 
-            this.textBox15.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox15, "textBox15");
+            this.textBox15.ForeColor = System.Drawing.Color.Black;
             this.textBox15.Name = "textBox15";
             // 
             // textBox16
             // 
-            this.textBox16.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox16, "textBox16");
+            this.textBox16.ForeColor = System.Drawing.Color.Black;
             this.textBox16.Name = "textBox16";
             // 
             // label16
@@ -393,14 +381,14 @@ namespace Musliw
             // 
             // textBox17
             // 
-            this.textBox17.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox17, "textBox17");
+            this.textBox17.ForeColor = System.Drawing.Color.Black;
             this.textBox17.Name = "textBox17";
             // 
             // textBox18
             // 
-            this.textBox18.ForeColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.textBox18, "textBox18");
+            this.textBox18.ForeColor = System.Drawing.Color.Black;
             this.textBox18.Name = "textBox18";
             // 
             // label18
@@ -416,12 +404,25 @@ namespace Musliw
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // checkBox6
             // 
-            resources.ApplyResources(this.button7, "button7");
-            this.button7.Name = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            resources.ApplyResources(this.checkBox6, "checkBox6");
+            this.checkBox6.ForeColor = System.Drawing.Color.Black;
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            resources.ApplyResources(this.label19, "label19");
+            this.label19.ForeColor = System.Drawing.Color.Black;
+            this.label19.Name = "label19";
+            // 
+            // button6
+            // 
+            resources.ApplyResources(this.button6, "button6");
+            this.button6.Name = "button6";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button7_Click);
             // 
             // Aff_hor
             // 
@@ -429,7 +430,10 @@ namespace Musliw
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.checkBox6);
             this.Controls.Add(this.checkBox5);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.textBox18);
@@ -439,7 +443,6 @@ namespace Musliw
             this.Controls.Add(this.label16);
             this.Controls.Add(this.textBox15);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.textBox14);
             this.Controls.Add(this.checkBox4);
@@ -460,7 +463,6 @@ namespace Musliw
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -475,7 +477,6 @@ namespace Musliw
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.ForeColor = System.Drawing.Color.Black;
@@ -505,7 +506,6 @@ namespace Musliw
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox textBox1;
@@ -528,7 +528,6 @@ namespace Musliw
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.TextBox textBox14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox textBox15;
         private System.Windows.Forms.TextBox textBox16;
@@ -538,6 +537,8 @@ namespace Musliw
         private System.Windows.Forms.TextBox textBox18;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button button6;
     }
 }

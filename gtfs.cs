@@ -186,9 +186,9 @@ namespace Musliw
 
 
                 Google_Trip google_trip = new Google_Trip();
-                google_trip.route_id = elements[headers["route_id"]];
-                google_trip.service_id = elements[headers["service_id"]];
-                google_trip.trip_id = elements[headers["trip_id"]];
+                google_trip.route_id = elements[headers["route_id"]].Trim();
+                google_trip.service_id = elements[headers["service_id"]].Trim();
+                google_trip.trip_id = elements[headers["trip_id"]].Trim();
                 google_trips[google_trip.trip_id] = google_trip;
 
 
@@ -242,6 +242,7 @@ namespace Musliw
                 }
 
             }
+            fichier_calendar_dates.Close();
             return google_calendar_dates;
         }
 
@@ -385,16 +386,19 @@ namespace Musliw
                 passage.trip_id=elements[headers["trip_id"]];
                 string[] h1 = elements[headers["arrival_time"]].Split(':');
                 string[] h2 = elements[headers["departure_time"]].Split(':');
+                if (h1.Length > 1)
+                {
+
                 passage.heure_arr = float.Parse(h1[0]) * 60f + float.Parse(h1[1]) + float.Parse(h1[2]) / 60f;
                 passage.heure_dep = float.Parse(h2[0]) * 60f + float.Parse(h2[1]) + float.Parse(h2[2]) / 60f;
                 passage.num_arret=elements[headers["stop_id"]];
                 passage.num_ordre= int.Parse(elements[headers["stop_sequence"]]);
-                if (google_stop_times.ContainsKey(passage.trip_id)==false)
-                {
-                    google_stop_times[passage.trip_id]=new SortedList<int,Google_Stop_Time>();
+                    if (google_stop_times.ContainsKey(passage.trip_id) == false)
+                    {
+                        google_stop_times[passage.trip_id] = new SortedList<int, Google_Stop_Time>();
+                    }
+                    google_stop_times[passage.trip_id].Add(passage.num_ordre, passage);
                 }
-                google_stop_times[passage.trip_id].Add(passage.num_ordre,passage);
-                
                 //MessageBox.Show(DateTime.Parse(elements[1]).ToString());
                
 
@@ -456,6 +460,14 @@ namespace Musliw
                         String textel = "";
                         for (k = 0; k < n - 1; k++)
                         {
+                            if (elements.Values[k].heure_dep > elements.Values[k + 1].heure_dep)
+                            {
+                                elements.Values[k + 1].heure_dep+=1440f;
+                            }
+                            if (elements.Values[k].heure_arr > elements.Values[k + 1].heure_arr)
+                            {
+                                elements.Values[k + 1].heure_arr += 1440f;
+                            }
                             if (google_stops.ContainsKey(elements.Values[k].num_arret) == false)
                             {
                                 Google_Stop arret = new Google_Stop();

@@ -3,14 +3,10 @@
   <MonoDevelop.Ide.Workbench ctype="Workbench">
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Musliw" expanded="True" selected="True">
-            <Node name="References" expanded="True" />
-          </Node>
-        </State>
+        <State selected="True" />
       </Pad>
       <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
+        <State selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

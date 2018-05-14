@@ -201,8 +201,6 @@ C:\Documents and Settings\PalmierP\Mes documents\Google Drive\Musliw\Musliw\obj\
 C:\Documents and Settings\PalmierP\Mes documents\Google Drive\Musliw\Musliw\obj\Release\Musliw.exe
 C:\Documents and Settings\PalmierP\Mes documents\Google Drive\Musliw\Musliw\obj\Release\Musliw.pdb
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\Musliw.exe.config
-C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\Musliw.exe.manifest
-C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\Musliw.application
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\Musliw.exe
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\Musliw.pdb
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\en-US\Musliw.resources.dll
@@ -233,9 +231,6 @@ C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\en-US\Musli
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\en\Musliw.resources.dll
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\fr-FR\Musliw.resources.dll
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\fr\Musliw.resources.dll
-C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.TrustInfo.xml
-C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.exe.manifest
-C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.application
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.exe
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.pdb
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.csprojResolveAssemblyReference.cache
@@ -249,3 +244,9 @@ C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\fi\Npgsql.r
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\fr\Npgsql.resources.dll
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\ja\Npgsql.resources.dll
 C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\zh-CN\Npgsql.resources.dll
+C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.csproj.CoreCompileInputs.cache
+C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\Musliw.exe.manifest
+C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\bin\Release\Musliw.application
+C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.TrustInfo.xml
+C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.exe.manifest
+C:\Users\palmierp\Documents\Google Drive\Musliw64\Musliw\obj\Release\Musliw.application
